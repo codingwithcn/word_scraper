@@ -1,3 +1,8 @@
+# type the following command in command line
+#py -m pip install bs4
+#py -m pip install beautifulsoup4
+#py -m pip install requests
+# now you are ready to start coding
 from bs4.element import PageElement
 import requests
 from bs4 import BeautifulSoup
@@ -32,11 +37,11 @@ def synonyms(word):
       repeat =True
       break
   if repeat == True:
-    las = lonwn-2
+    la = lonwn-2
     gnwn = nwn[0]
-    number = int(gnwn[la:]
+    number = int(gnwn[la:])
   else:
-    la = lown-1
+    la = lonwn-1
     gnwn = nwn[0]
     number = int(gnwn[la:])
   
@@ -69,28 +74,32 @@ def synonyms(word):
 def define(word):
   worded = []
   while True:
-      URL = 'https://www.dictionary.com/browse/'+word+"?s=t"
-      if not ConnectionError == True:
-          page= requests.get(URL)
-          soup = BeautifulSoup(page.content,'html.parser')
-          result = soup.find(class_="css-1o58fj8 e1hk9ate4")
-          try:
-              definition = result.find_all("span",class_="one-click-content css-17f75g0 e1q3nk1v4")
-              for define in definition:
-                  worded.append(define.text)
-
-          except AttributeError:
-               URL ='https://www.dictionary.com/browse/'+word
-               page= requests.get(URL)
-               soup = BeautifulSoup(page.content,'html.parser')
-               result = soup.find(class_="css-1o58fj8 e1hk9ate4")
-               try:
-                   definition = result.find_all("span",class_="one-click-content css-17f75g0 e1q3nk1v4")
-                   for define in definition:
-                       worded.append(define.text)
-               except AttributeError:
-                    worded.append("continued")
-      else:
-            break
+    URL = 'https://www.dictionary.com/browse/'+word+"?s=t"
+    if not ConnectionError == True:
+      page= requests.get(URL)
+      soup = BeautifulSoup(page.content,'html.parser')
+      result = soup.find(class_="css-1o58fj8 e1hk9ate4")
+      try:
+        definition = result.find_all("span",class_="one-click-content css-17f75g0 e1q3nk1v4")
+        for define in definition:
+          worded.append(define.text)
+      except AttributeError:
+        URL ='https://www.dictionary.com/browse/'+word
+        page= requests.get(URL)
+        soup = BeautifulSoup(page.content,'html.parser')
+        result = soup.find(class_="css-1o58fj8 e1hk9ate4")
+        try:
+          definition = result.find_all("span",class_="one-click-content css-17f75g0 e1q3nk1v4")
+          for define in definition:
+            worded.append(define.text)
+        except AttributeError:
+          worded.append("continued")
+    else:
       break
+    break
   return worded   
+if __name__ == "__main__":
+    word = synonyms('food')
+    print(word)
+    words = define('food')
+    print(words)
